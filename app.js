@@ -17,7 +17,10 @@ cards.forEach(card => {
         turnCounter++;
         name = "";
       } else if (name != "" && name != card.dataset.name) {
+        card.style.background = `url(img/${card.dataset.name}.png)`;
+        card.classList.add("active");
         wrongMatch(name);
+        wrongMatch(card.dataset.name);
         turnCounter++;
         name = "";
       }
@@ -39,5 +42,10 @@ function correctMatch(name) {
 
 function wrongMatch(name) {
   const cards = document.querySelectorAll(`[data-name='${name}']`);
-  cards.forEach(card => (card.style.background = "url(img/karta.png)"));
+  cards.forEach(card => {
+    setTimeout(() => {
+      card.classList.remove("active");
+      card.style.background = "url(img/karta.png)";
+    }, 1000);
+  });
 }
