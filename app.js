@@ -2,6 +2,7 @@ const cards = Array.from(document.querySelectorAll(".card"));
 let name = "";
 let turnCounter = 0;
 let lock = false;
+let pairsLeft = 6;
 
 cards.forEach(card => {
   card.addEventListener("click", () => {
@@ -18,6 +19,13 @@ cards.forEach(card => {
         card.style.background = `url(img/${name}.png)`;
         correctMatch(name);
         turnCounter++;
+        pairsLeft--;
+        console.log(pairsLeft);
+        if (pairsLeft == 0) {
+          document.querySelector(
+            ".board"
+          ).innerHTML = `<h1>You win! <br> Done in ${turnCounter} turns.</h1>`;
+        }
         name = "";
       } else if (name != "" && name != card.dataset.name) {
         card.style.background = `url(img/${card.dataset.name}.png)`;
@@ -29,7 +37,10 @@ cards.forEach(card => {
       }
     }
 
-    document.querySelector(".score").innerHTML = "Turn counter: " + turnCounter;
+    if (pairsLeft !== 0) {
+      document.querySelector(".score").innerHTML =
+        "Turn counter: " + turnCounter;
+    }
   });
 });
 
